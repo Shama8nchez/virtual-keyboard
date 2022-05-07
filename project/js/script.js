@@ -53,8 +53,17 @@ document.onkeydown = function(e) {
   /* console.log(e.key) */
   const textArea = document.querySelector('#text-field');
   let text = '';
-  text += e.key
-  text
+  let l = e.key;
+  if (l == "Shift" || l == "Ctrl" || l == "Alt" || l == "Win") {
+    l = '';
+  };
+  if (l == "Tab") {
+    l = '    '
+  }
+  if (l == "Enter") {
+    l = '\n'
+  }
+  text += l;
   textArea.value += text;
 }
 
@@ -70,4 +79,42 @@ document.onkeyup = function(e) {
   }
 }
 
+const letterKeys = document.querySelectorAll('.key')
+letterKeys.forEach(letterKey => letterKey.addEventListener('click', (e) => {
+  let l = letterKey.innerHTML;
+  const textArea = document.querySelector('#text-field');
+  if (l == "Backspace") {
+    /* textArea.value= textArea.value.slice(0, +n.value - 1) + textArea.value.slice(+n.value) */
+    l = '';
+    textArea.setRangeText(l, textArea.selectionStart-1, textArea.selectionEnd, "end");
+    textArea.focus();
+  }
+  else if (l == "Del") {
+    l = '';
+    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd + 1, "end");
+    textArea.focus();
+  }
 
+  else if (l == "Shift" || l == "Ctrl" || l == "Alt" || l == "Win") {
+    l = '';
+    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
+    textArea.focus();
+  }
+
+  else if (l == "Tab") {
+    l = '    '
+    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
+    textArea.focus();
+  }
+
+  else if (l == "Enter") {
+    l = '\n'
+    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
+    textArea.focus();
+  }
+
+  else {
+    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
+    textArea.focus();
+  }
+}))
