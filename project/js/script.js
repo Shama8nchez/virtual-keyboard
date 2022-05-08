@@ -1,12 +1,16 @@
-if (!localStorage.getItem('condition')) {
-  localStorage.setItem('condition', [0, false, false]);
+if (!localStorage.getItem("condition")) {
+  localStorage.setItem("condition", "[0, false, false]");
 }
-let cond = localStorage.getItem('condition');
+let cond = JSON.parse(localStorage.getItem("condition"));
+
+console.log(cond);
 
 const body = document.body;
 let capsPress = false;
-let ruL = false;
-let cL = false;
+/* let ruL = false; */
+let ruL = cond[1];
+/* let cL = false; */
+let cL = cond[2];
 
 const title = document.createElement('h1');
 title.classList.add('title');
@@ -40,18 +44,21 @@ let lettersru = ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=
 let lettersruShift = ['Ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', '/', 'Del', 'CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', "Э", 'Enter', 'Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ',', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl'];
 let lettersruCaps = ['Ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', '\\', 'Del', 'CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', "Э", 'Enter', 'Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', '.', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl'];
 let lettersruShiftC = ['ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '/', 'Del', 'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', "э", 'Enter', 'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', ',', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl'];
-
+let keyArr = [letters, lettersCaps, lettersru, lettersruCaps]
 
 for (let i = 0; i < letters.length; i++) {
   const letter = document.createElement('div');
   letter.classList.add('key');
-  if (letters[i] == 'Backspace' || letters[i] == 'CapsLock' || letters[i] == 'Enter' || letters[i] == 'Shift') {
+  if (keyArr[cond[0]][i] == 'Backspace' || keyArr[cond[0]][i] == 'CapsLock' || keyArr[cond[0]][i] == 'Enter' || keyArr[cond[0]][i] == 'Shift') {
     letter.classList.add('key-double');
+    if (keyArr[cond[0]][i] == 'CapsLock' && cL) {
+      letter.classList.add('key-active');
+    }
   }
-  if (letters[i] == ' ') {
+  if (keyArr[cond[0]][i] == ' ') {
     letter.classList.add('keyspace');
   }
-  letter.innerHTML = letters[i];
+  letter.innerHTML = keyArr[cond[0]][i];
   letter.dataset.num = `${arr[i]}`
   keyboard.appendChild(letter);
 }
@@ -66,13 +73,15 @@ document.onkeydown = function(e) {
 
   if (e.altKey && e.ctrlKey) {                                     //Languages
     const letter = document.querySelectorAll('.key');
-    if (!ruL) {      
+    if (!ruL) {
       if (!cL) {
+        localStorage.setItem("condition", "[2, true, false]");
         for (let i = 0; i < letter.length; i++) {
           letter[i].innerHTML = lettersru[i]
         }
       }
       else {
+        localStorage.setItem("condition", "[3, true, true]");
         for (let i = 0; i < letter.length; i++) {
           letter[i].innerHTML = lettersruCaps[i]
         }
@@ -81,11 +90,13 @@ document.onkeydown = function(e) {
     }
     else {      
       if (!cL) {
+        localStorage.setItem("condition", "[0, false, false]");
         for (let i = 0; i < letter.length; i++) {
           letter[i].innerHTML = letters[i]
         }
       }
       else {
+        localStorage.setItem("condition", "[1, false, true]");
         for (let i = 0; i < letter.length; i++) {
           letter[i].innerHTML = lettersCaps[i]
         }
@@ -146,11 +157,13 @@ function pushCaps(k) {
       k.classList.add('key-active');
 
       if (!ruL) {
+        localStorage.setItem("condition", "[1, false, true]");
         for (let i = 0; i < letter.length; i++) {
           letter[i].innerHTML = lettersCaps[i]
         }
       }
       else {
+        localStorage.setItem("condition", "[3, true, true]");
         for (let i = 0; i < letter.length; i++) {
           letter[i].innerHTML = lettersruCaps[i]
         }
@@ -160,11 +173,13 @@ function pushCaps(k) {
       cL = false;
       k.classList.remove('key-active');
       if (!ruL) {
+        localStorage.setItem("condition", "[0, false, false]");
         for (let i = 0; i < letter.length; i++) {
           letter[i].innerHTML = letters[i]
         }
       }
       else {
+        localStorage.setItem("condition", "[2, true, false]");
         for (let i = 0; i < letter.length; i++) {
           letter[i].innerHTML = lettersru[i]
         }
