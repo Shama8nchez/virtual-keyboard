@@ -1,3 +1,8 @@
+if (!localStorage.getItem('condition')) {
+  localStorage.setItem('condition', [0, false, false]);
+}
+let cond = localStorage.getItem('condition');
+
 const body = document.body;
 let capsPress = false;
 let ruL = false;
@@ -19,6 +24,11 @@ const keyboard = document.createElement('div');
 keyboard.classList.add('keyboard');
 document.body.appendChild(keyboard);
 
+const description = document.createElement('p');
+description.classList.add('description')
+description.innerHTML = "Клавиатура создана в операционной системе Windows. Для переключения языка комбинация: левыe ctrl + alt"
+document.body.appendChild(description);
+
 let arr = ['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace', 'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete', 'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter', 'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight'];
 let letters = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del', 'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter', 'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl'];
 let lettersShift = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|', 'Del', 'CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', 'Enter', 'Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl']
@@ -31,10 +41,6 @@ let lettersruShift = ['Ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', 
 let lettersruCaps = ['Ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', '\\', 'Del', 'CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', "Э", 'Enter', 'Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', '.', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl'];
 let lettersruShiftC = ['ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '/', 'Del', 'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', "э", 'Enter', 'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', ',', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl'];
 
-/* document.onkeydown = function(e) {
-  arr.push(e.code);
-  console.log(arr);
-} */
 
 for (let i = 0; i < letters.length; i++) {
   const letter = document.createElement('div');
@@ -52,8 +58,7 @@ for (let i = 0; i < letters.length; i++) {
 
 document.onkeydown = function(e) {
   e.preventDefault()
-  const actKey = document.querySelector('.key[data-num="' + e.code + '"');
-   
+  const actKey = document.querySelector('.key[data-num="' + e.code + '"');   
   actKey.classList.add('key-active');  
   if (actKey.dataset.num == 'ShiftLeft' || actKey.dataset.num == 'ShiftRight') {      //SHIFT  161 162
     shiftDown();
@@ -91,50 +96,9 @@ document.onkeydown = function(e) {
 
   if (actKey.dataset.num == 'CapsLock') {                          //CapsLock  200
     pushCaps(actKey);
-
   }
   
-  const textArea = document.querySelector('#text-field');
-  let l = actKey.innerHTML;   //let l = e.key;
-  if (l == "Backspace") {
-    l = '';
-    textArea.setRangeText(l, textArea.selectionStart-1, textArea.selectionEnd, "end");
-    textArea.focus();
-  }
-  else if (l == "Del") {
-    l = '';
-    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd + 1, "end");
-    textArea.focus();
-  }
-
-  else if (l == "Shift" || l == "Ctrl" || l == "Alt" || l == "Win") {
-    l = '';
-    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
-    textArea.focus();
-  }
-
-  else if (l == "Tab") {
-    l = '    '
-    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
-    textArea.focus();
-  }
-
-  else if (l == "Enter") {
-    l = '\n'
-    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
-    textArea.focus();
-  }
-
-  else if (l == "CapsLock") {
-    l = ''
-    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
-    textArea.focus();
-  }
-
-  else {
-    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
-    textArea.focus();
-  }
+  typeLetters(actKey)
 }
 
 
@@ -155,48 +119,15 @@ letterKeys.forEach(letterKey => letterKey.addEventListener('click', (e) => {
     pushCaps(letterKey);
   }
 
-  let l = letterKey.innerHTML;
-  const textArea = document.querySelector('#text-field');
-  if (l == "Backspace") {
-    /* textArea.value= textArea.value.slice(0, +n.value - 1) + textArea.value.slice(+n.value) */
-    l = '';
-    textArea.setRangeText(l, textArea.selectionStart-1, textArea.selectionEnd, "end");
-    textArea.focus();
-  }
-  else if (l == "Del") {
-    l = '';
-    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd + 1, "end");
-    textArea.focus();
-  }
+  typeLetters(letterKey);
+}))
 
-  else if (l == "Shift" || l == "Ctrl" || l == "Alt" || l == "Win") {
-    l = '';
-    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
-    textArea.focus();
-  }
+letterKeys.forEach(letterKey => letterKey.addEventListener('mousedown', () => {
+  letterKey.classList.add('key-active')
+}))
 
-  else if (l == "Tab") {
-    l = '    '
-    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
-    textArea.focus();
-  }
-
-  else if (l == "Enter") {
-    l = '\n'
-    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
-    textArea.focus();
-  }
-
-  else if (l == "CapsLock") {    
-    l = ''
-    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
-    textArea.focus();
-  }
-
-  else {
-    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
-    textArea.focus();
-  }
+letterKeys.forEach(letterKey => letterKey.addEventListener('mouseup', () => {
+  letterKey.classList.remove('key-active')
 }))
 
 const LShift = document.querySelector('.key[data-num="ShiftLeft"');
@@ -296,4 +227,48 @@ function shiftUp() {
       }
 
     }
+}
+
+function typeLetters(k) {
+  let l = k.innerHTML;
+  const textArea = document.querySelector('#text-field');
+  if (l == "Backspace") {
+    l = '';
+    textArea.setRangeText(l, textArea.selectionStart-1, textArea.selectionEnd, "end");
+    textArea.focus();
+  }
+  else if (l == "Del") {
+    l = '';
+    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd + 1, "end");
+    textArea.focus();
+  }
+
+  else if (l == "Shift" || l == "Ctrl" || l == "Alt" || l == "Win") {
+    l = '';
+    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
+    textArea.focus();
+  }
+
+  else if (l == "Tab") {
+    l = '    '
+    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
+    textArea.focus();
+  }
+
+  else if (l == "Enter") {
+    l = '\n'
+    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
+    textArea.focus();
+  }
+
+  else if (l == "CapsLock") {    
+    l = ''
+    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
+    textArea.focus();
+  }
+
+  else {
+    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
+    textArea.focus();
+  }
 }
