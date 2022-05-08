@@ -1,15 +1,11 @@
-if (!localStorage.getItem("condition")) {
-  localStorage.setItem("condition", "[0, false, false]");
+'use strict';
+
+if (!localStorage.getItem('condition')) {
+  localStorage.setItem('condition', '[0, false, false]');
 }
-let cond = JSON.parse(localStorage.getItem("condition"));
+let cond = JSON.parse(localStorage.getItem('condition'));
 
-console.log(cond);
-
-const body = document.body;
-let capsPress = false;
-/* let ruL = false; */
 let ruL = cond[1];
-/* let cL = false; */
 let cL = cond[2];
 
 const title = document.createElement('h1');
@@ -29,261 +25,229 @@ keyboard.classList.add('keyboard');
 document.body.appendChild(keyboard);
 
 const description = document.createElement('p');
-description.classList.add('description')
-description.innerHTML = "Клавиатура создана в операционной системе Windows. Для переключения языка комбинация: левыe ctrl + alt"
+description.classList.add('description');
+description.innerHTML = 'Клавиатура создана в операционной системе Windows. Для переключения языка комбинация: левыe ctrl + alt';
 document.body.appendChild(description);
 
 let arr = ['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace', 'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete', 'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter', 'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight'];
 let letters = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del', 'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter', 'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl'];
-let lettersShift = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|', 'Del', 'CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', 'Enter', 'Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl']
-let lettersCaps = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']', '\\', 'Del', 'CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', "'", 'Enter', 'Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl']
-let lettersShiftC = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '{', '}', '|', 'Del', 'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ':', '"', 'Enter', 'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '<', '>', '?', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl']
+let lettersShift = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|', 'Del', 'CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', 'Enter', 'Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl'];
+let lettersCaps = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']', '\\', 'Del', 'CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', "'", 'Enter', 'Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl'];
+let lettersShiftC = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '{', '}', '|', 'Del', 'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ':', '"', 'Enter', 'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '<', '>', '?', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl'];
 
-let keyNum = [1920, 490, 500, 510, 520, 530, 540, 550, 560, 570, 480, 1890, 1870, 80, 90, 810, 870, 690, 820, 840, 890, 850, 730, 790, 800, 2190, 2210, 2200, 460, 200, 650, 830, 680, 700, 710, 720, 740, 750, 760, 1860, 2220, 130, 161, 900, 880, 670, 860, 660, 780, 770, 1880, 1900, 1910, 380, 162, 171, 911, 181, 320, 182, 370, 400, 390, 172]
-let lettersru = ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\', 'Del', 'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', "э", 'Enter', 'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl'];
-let lettersruShift = ['Ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', '/', 'Del', 'CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', "Э", 'Enter', 'Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ',', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl'];
-let lettersruCaps = ['Ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', '\\', 'Del', 'CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', "Э", 'Enter', 'Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', '.', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl'];
-let lettersruShiftC = ['ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '/', 'Del', 'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', "э", 'Enter', 'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', ',', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl'];
-let keyArr = [letters, lettersCaps, lettersru, lettersruCaps]
+let lettersru = ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\', 'Del', 'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter', 'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl'];
+let lettersruShift = ['Ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', '/', 'Del', 'CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', 'Enter', 'Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ',', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl'];
+let lettersruCaps = ['Ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', '\\', 'Del', 'CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', 'Enter', 'Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', '.', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl'];
+let lettersruShiftC = ['ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '/', 'Del', 'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter', 'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', ',', 'Up', 'Shift', 'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Left', 'Down', 'Right', 'Ctrl'];
+let keyArr = [letters, lettersCaps, lettersru, lettersruCaps];
 
-for (let i = 0; i < letters.length; i++) {
+for (let i = 0; i < letters.length; i += 1) {
   const letter = document.createElement('div');
   letter.classList.add('key');
-  if (keyArr[cond[0]][i] == 'Backspace' || keyArr[cond[0]][i] == 'CapsLock' || keyArr[cond[0]][i] == 'Enter' || keyArr[cond[0]][i] == 'Shift') {
+  if (keyArr[cond[0]][i] === 'Backspace' || keyArr[cond[0]][i] === 'CapsLock' || keyArr[cond[0]][i] === 'Enter' || keyArr[cond[0]][i] === 'Shift') {
     letter.classList.add('key-double');
-    if (keyArr[cond[0]][i] == 'CapsLock' && cL) {
+    if (keyArr[cond[0]][i] === 'CapsLock' && cL) {
       letter.classList.add('key-active');
     }
   }
-  if (keyArr[cond[0]][i] == ' ') {
+  if (keyArr[cond[0]][i] === ' ') {
     letter.classList.add('keyspace');
   }
   letter.innerHTML = keyArr[cond[0]][i];
-  letter.dataset.num = `${arr[i]}`
+  letter.dataset.num = `${arr[i]}`;
   keyboard.appendChild(letter);
 }
-
-document.onkeydown = function(e) {
-  e.preventDefault()
-  const actKey = document.querySelector('.key[data-num="' + e.code + '"');   
-  actKey.classList.add('key-active');  
-  if (actKey.dataset.num == 'ShiftLeft' || actKey.dataset.num == 'ShiftRight') {      //SHIFT  161 162
-    shiftDown();
-  }
-
-  if (e.altKey && e.ctrlKey) {                                     //Languages
-    const letter = document.querySelectorAll('.key');
-    if (!ruL) {
-      if (!cL) {
-        localStorage.setItem("condition", "[2, true, false]");
-        for (let i = 0; i < letter.length; i++) {
-          letter[i].innerHTML = lettersru[i]
-        }
-      }
-      else {
-        localStorage.setItem("condition", "[3, true, true]");
-        for (let i = 0; i < letter.length; i++) {
-          letter[i].innerHTML = lettersruCaps[i]
-        }
-      }
-      ruL = true;
-    }
-    else {      
-      if (!cL) {
-        localStorage.setItem("condition", "[0, false, false]");
-        for (let i = 0; i < letter.length; i++) {
-          letter[i].innerHTML = letters[i]
-        }
-      }
-      else {
-        localStorage.setItem("condition", "[1, false, true]");
-        for (let i = 0; i < letter.length; i++) {
-          letter[i].innerHTML = lettersCaps[i]
-        }
-      }
-      ruL = false;
-    }
-  }
-
-  if (actKey.dataset.num == 'CapsLock') {                          //CapsLock  200
-    pushCaps(actKey);
-  }
-  
-  typeLetters(actKey)
-}
-
-
-document.onkeyup = function(e) {
-  const actKey = document.querySelector('.key[data-num="' + e.code + '"');   //('.key[data-num="'+e.keyCode+e.location.toString()+'"');
-  if (actKey.dataset.num !== 'CapsLock') {
-    actKey.classList.remove('key-active');
-  }
-  
-  if (actKey.dataset.num == 'ShiftLeft' || actKey.dataset.num == 'ShiftRight') {
-    shiftUp();
-  }
-}
-
-const letterKeys = document.querySelectorAll('.key')
-letterKeys.forEach(letterKey => letterKey.addEventListener('click', (e) => {
-  if (letterKey.dataset.num == 'CapsLock') {                          //CapsLock  200
-    pushCaps(letterKey);
-  }
-
-  typeLetters(letterKey);
-}))
-
-letterKeys.forEach(letterKey => letterKey.addEventListener('mousedown', () => {
-  letterKey.classList.add('key-active')
-}))
-
-letterKeys.forEach(letterKey => letterKey.addEventListener('mouseup', () => {
-  letterKey.classList.remove('key-active')
-}))
-
-const LShift = document.querySelector('.key[data-num="ShiftLeft"');
-const RShift = document.querySelector('.key[data-num="ShiftRight"');
-
-LShift.addEventListener('mousedown', shiftDown)
-RShift.addEventListener('mousedown', shiftDown)
-LShift.addEventListener('mouseup', shiftUp)
-RShift.addEventListener('mouseup', shiftUp)
 
 function pushCaps(k) {
   const letter = document.querySelectorAll('.key');
 
-    if (!cL) {
-      cL = true;
-      k.classList.add('key-active');
-
-      if (!ruL) {
-        localStorage.setItem("condition", "[1, false, true]");
-        for (let i = 0; i < letter.length; i++) {
-          letter[i].innerHTML = lettersCaps[i]
-        }
+  if (!cL) {
+    cL = true;
+    k.classList.add('key-active');
+    if (!ruL) {
+      localStorage.setItem('condition', '[1, false, true]');
+      for (let i = 0; i < letter.length; i += 1) {
+        letter[i].innerHTML = lettersCaps[i];
       }
-      else {
-        localStorage.setItem("condition", "[3, true, true]");
-        for (let i = 0; i < letter.length; i++) {
-          letter[i].innerHTML = lettersruCaps[i]
-        }
+    } else {
+      localStorage.setItem('condition', '[3, true, true]');
+      for (let i = 0; i < letter.length; i += 1) {
+        letter[i].innerHTML = lettersruCaps[i];
       }
     }
-    else {
-      cL = false;
-      k.classList.remove('key-active');
-      if (!ruL) {
-        localStorage.setItem("condition", "[0, false, false]");
-        for (let i = 0; i < letter.length; i++) {
-          letter[i].innerHTML = letters[i]
-        }
+  } else {
+    cL = false;
+    k.classList.remove('key-active');
+    if (!ruL) {
+      localStorage.setItem('condition', '[0, false, false]');
+      for (let i = 0; i < letter.length; i += 1) {
+        letter[i].innerHTML = letters[i];
       }
-      else {
-        localStorage.setItem("condition", "[2, true, false]");
-        for (let i = 0; i < letter.length; i++) {
-          letter[i].innerHTML = lettersru[i]
-        }
+    } else {
+      localStorage.setItem('condition', '[2, true, false]');
+      for (let i = 0; i < letter.length; i += 1) {
+        letter[i].innerHTML = lettersru[i];
       }
     }
+  }
 }
 
 function shiftDown() {
   const letter = document.querySelectorAll('.key');
   if (!ruL) {
     if (!cL) {
-      for (let i = 0; i < letter.length; i++) {
-        letter[i].innerHTML = lettersShift[i]
+      for (let i = 0; i < letter.length; i += 1) {
+        letter[i].innerHTML = lettersShift[i];
+      }
+    } else {
+      for (let i = 0; i < letter.length; i += 1) {
+        letter[i].innerHTML = lettersShiftC[i];
       }
     }
-    else {
-      for (let i = 0; i < letter.length; i++) {
-        letter[i].innerHTML = lettersShiftC[i]
-      }
+  } else if (!cL) {
+    for (let i = 0; i < letter.length; i += 1) {
+      letter[i].innerHTML = lettersruShift[i];
     }
-  }
-  else {
-    if (!cL) {
-      for (let i = 0; i < letter.length; i++) {
-        letter[i].innerHTML = lettersruShift[i]
-      }
-    }
-    else {
-      for (let i = 0; i < letter.length; i++) {
-        letter[i].innerHTML = lettersruShiftC[i]
-      }
+  } else {
+    for (let i = 0; i < letter.length; i += 1) {
+      letter[i].innerHTML = lettersruShiftC[i];
     }
   }
 }
 
 function shiftUp() {
   const letter = document.querySelectorAll('.key');
-    if (!ruL) {
-      if (!cL) {
-        for (let i = 0; i < letter.length; i++) {
-          letter[i].innerHTML = letters[i]
-        }
+  if (!ruL) {
+    if (!cL) {
+      for (let i = 0; i < letter.length; i += 1) {
+        letter[i].innerHTML = letters[i];
       }
-      else {
-        for (let i = 0; i < letter.length; i++) {
-          letter[i].innerHTML = lettersCaps[i]
-        }
+    } else {
+      for (let i = 0; i < letter.length; i += 1) {
+        letter[i].innerHTML = lettersCaps[i];
       }
     }
-    else {
-      if (!cL) {
-        for (let i = 0; i < letter.length; i++) {
-          letter[i].innerHTML = lettersru[i]
-        }
-      }
-      else {
-        for (let i = 0; i < letter.length; i++) {
-          letter[i].innerHTML = lettersruCaps[i]
-        }
-      }
-
+  } else if (!cL) {
+    for (let i = 0; i < letter.length; i += 1) {
+      letter[i].innerHTML = lettersru[i];
     }
+  } else {
+    for (let i = 0; i < letter.length; i += 1) {
+      letter[i].innerHTML = lettersruCaps[i];
+    }
+  }
 }
 
 function typeLetters(k) {
   let l = k.innerHTML;
   const textArea = document.querySelector('#text-field');
-  if (l == "Backspace") {
+  if (l === 'Backspace') {
     l = '';
-    textArea.setRangeText(l, textArea.selectionStart-1, textArea.selectionEnd, "end");
+    textArea.setRangeText(l, textArea.selectionStart - 1, textArea.selectionEnd, 'end');
     textArea.focus();
-  }
-  else if (l == "Del") {
+  } else if (l === 'Del') {
     l = '';
-    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd + 1, "end");
+    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd + 1, 'end');
     textArea.focus();
-  }
-
-  else if (l == "Shift" || l == "Ctrl" || l == "Alt" || l == "Win") {
+  } else if (l === 'Shift' || l === 'Ctrl' || l === 'Alt' || l === 'Win') {
     l = '';
-    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
+    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, 'end');
     textArea.focus();
-  }
-
-  else if (l == "Tab") {
-    l = '    '
-    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
+  } else if (l === 'Tab') {
+    l = '    ';
+    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, 'end');
     textArea.focus();
-  }
-
-  else if (l == "Enter") {
-    l = '\n'
-    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
+  } else if (l === 'Enter') {
+    l = '\n';
+    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, 'end');
     textArea.focus();
-  }
-
-  else if (l == "CapsLock") {    
-    l = ''
-    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
+  } else if (l === 'CapsLock') {
+    l = '';
+    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, 'end');
     textArea.focus();
-  }
-
-  else {
-    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, "end");
+  } else {
+    textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd, 'end');
     textArea.focus();
   }
 }
+
+document.onkeydown = function (e) {
+  e.preventDefault();
+  const actKey = document.querySelector('.key[data-num="' + e.code + '"');
+  actKey.classList.add('key-active');
+  if (actKey.dataset.num === 'ShiftLeft' || actKey.dataset.num === 'ShiftRight') {
+    shiftDown();
+  }
+
+  if (e.altKey && e.ctrlKey) {
+    const letter = document.querySelectorAll('.key');
+    if (!ruL) {
+      if (!cL) {
+        localStorage.setItem('condition', '[2, true, false]');
+        for (let i = 0; i < letter.length; i += 1) {
+          letter[i].innerHTML = lettersru[i];
+        }
+      } else {
+        localStorage.setItem('condition', '[3, true, true]');
+        for (let i = 0; i < letter.length; i += 1) {
+          letter[i].innerHTML = lettersruCaps[i];
+        }
+      }
+      ruL = true;
+    } else {
+      if (!cL) {
+        localStorage.setItem('condition', '[0, false, false]');
+        for (let i = 0; i < letter.length; i += 1) {
+          letter[i].innerHTML = letters[i];
+        }
+      } else {
+        localStorage.setItem('condition', '[1, false, true]');
+        for (let i = 0; i < letter.length; i += 1) {
+          letter[i].innerHTML = lettersCaps[i];
+        }
+      }
+      ruL = false;
+    }
+  }
+
+  if (actKey.dataset.num === 'CapsLock') {
+    pushCaps(actKey);
+  }
+  typeLetters(actKey);
+};
+
+document.onkeyup = function (e) {
+  const actKey = document.querySelector('.key[data-num="' + e.code + '"');
+  if (actKey.dataset.num !== 'CapsLock') {
+    actKey.classList.remove('key-active');
+  }
+
+  if (actKey.dataset.num === 'ShiftLeft' || actKey.dataset.num === 'ShiftRight') {
+    shiftUp();
+  }
+};
+
+const letterKeys = document.querySelectorAll('.key');
+letterKeys.forEach(letterKey => letterKey.addEventListener('click', () => {
+  if (letterKey.dataset.num === 'CapsLock') {
+    pushCaps(letterKey);
+  }
+
+  typeLetters(letterKey);
+}));
+
+letterKeys.forEach(letterKey => letterKey.addEventListener('mousedown', () => {
+  letterKey.classList.add('key-active');
+}));
+
+letterKeys.forEach(letterKey => letterKey.addEventListener('mouseup', () => {
+  letterKey.classList.remove('key-active');
+}));
+
+const LShift = document.querySelector('.key[data-num="ShiftLeft"');
+const RShift = document.querySelector('.key[data-num="ShiftRight"');
+
+LShift.addEventListener('mousedown', shiftDown);
+RShift.addEventListener('mousedown', shiftDown);
+LShift.addEventListener('mouseup', shiftUp);
+RShift.addEventListener('mouseup', shiftUp);
