@@ -141,8 +141,10 @@ function typeLetters(k) {
   const textArea = document.querySelector('#text-field');
   if (l === 'Backspace') {
     l = '';
-    textArea.setRangeText(l, textArea.selectionStart - 1, textArea.selectionEnd, 'end');
-    textArea.focus();
+    if (textArea.selectionStart !== 0) {
+      textArea.setRangeText(l, textArea.selectionStart - 1, textArea.selectionEnd, 'end');
+      textArea.focus();
+    }
   } else if (l === 'Del') {
     l = '';
     textArea.setRangeText(l, textArea.selectionStart, textArea.selectionEnd + 1, 'end');
